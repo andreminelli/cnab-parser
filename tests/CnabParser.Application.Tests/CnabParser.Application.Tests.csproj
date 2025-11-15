@@ -16,10 +16,12 @@
     </PackageReference>
     <PackageReference Include="NSubstitute" Version="5.3.0" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\CnabParser.Application\CnabParser.Application.csproj" />
+    <ProjectReference Include="..\..\src\CnabParser.Core\CnabParser.Core.csproj" />
   </ItemGroup>
 
 </Project>
