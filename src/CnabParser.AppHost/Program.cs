@@ -8,6 +8,7 @@ var database = sqlServer
 
 builder
     .AddProject<Projects.CnabParser_Api>("api")
-    .WithReference(database);
+    .WithReference(database)
+    .WaitFor(database);
 
 builder.Build().Run();

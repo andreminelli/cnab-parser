@@ -11,4 +11,9 @@ public class Transaction
     public decimal Amount { get; set; }
     public string Cpf { get; set; } = string.Empty;
     public string Card { get; set; } = string.Empty;
+
+    internal decimal GetSignedAmount()
+    {
+        throw new NotImplementedException();
+    }
 }

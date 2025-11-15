@@ -1,14 +1,27 @@
 using CnabParser.Application;
+using CnabParser.Core.Repositories;
+using CnabParser.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.AddServiceDefaults();
+
+var connectionName = "cnabdb";
+var connectionString = builder.Configuration.GetConnectionString(connectionName);
+builder.Services.AddDbContext<CnabDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddSingleton<ICnabFileParser, CnabFileParser>();
 
 builder.Services.AddScoped<ICnabImporterService, CnabImporterService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -25,7 +38,7 @@ app
     {
         await using var fileStream = file.OpenReadStream();
         var result = await cnabImporterService.ImportAsync(fileStream, cancellationToken);
-        return TypedResults.Ok();
+        return TypedResults.Ok(result);
     })
     .DisableAntiforgery()
     .WithOpenApi(operation => new(operation)
@@ -33,5 +46,12 @@ app
         Summary = "CNAB Files",
         Description = "Upload a CNAB file"
     });
+
+// Create database on startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<CnabDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+}
 
 app.Run();
