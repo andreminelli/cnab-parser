@@ -6,6 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
         <OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)\openapi</OpenApiDocumentsDirectory>
+        <UserSecretsId>a721a4ac-3a90-4105-a05b-a20c7889a9bf</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,7 +23,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>        
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.3" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.3" />        
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.10.3" />
     </ItemGroup>
 
