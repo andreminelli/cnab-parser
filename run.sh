@@ -1,0 +1,2 @@
+#!/bin/bash
+dotnet run --project src/CnabParser.AppHost/CnabParser.AppHost.csproj
