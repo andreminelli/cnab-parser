@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		CNAB.txt = CNAB.txt
 		Directory.Build.props = Directory.Build.props
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CnabParser.Infrastructure.Tests", "tests\CnabParser.Infrastructure.Tests\CnabParser.Infrastructure.Tests.csproj", "{1A863256-ED74-3CA6-5D1C-AF7E359D3119}"
