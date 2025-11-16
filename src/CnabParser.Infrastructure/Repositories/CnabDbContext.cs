@@ -26,12 +26,6 @@ public class CnabDbContext : DbContext
             entity.Property(e => e.Name).IsRequired().HasMaxLength(20);
             entity.Property(e => e.OwnerName).IsRequired().HasMaxLength(15);
 
-            //entity.HasMany(e => e.Transactions)
-            //    .WithOne(t => t.Store)
-            //    .HasForeignKey("StoreId")
-            //    .IsRequired()
-            //    .OnDelete(DeleteBehavior.Restrict);
-
             entity.HasIndex(e => new { e.Name, e.OwnerName }).IsUnique();
         });
 
@@ -47,11 +41,15 @@ public class CnabDbContext : DbContext
                 .HasForeignKey("StoreId")
                 .IsRequired();
 
+            entity.Property(e => e.DataSourceId).IsRequired();
+
             entity.Property(e => e.Type).IsRequired();
             entity.Property(e => e.Date).IsRequired();
             entity.Property(e => e.Amount).HasPrecision(18, 2).IsRequired();
             entity.Property(e => e.Cpf).IsRequired().HasMaxLength(11);
             entity.Property(e => e.Card).IsRequired().HasMaxLength(12);
+
+            entity.HasIndex(e => e.DataSourceId);
         });
     }
 }

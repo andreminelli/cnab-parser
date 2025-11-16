@@ -19,6 +19,8 @@ public class CnabImporterService(
 
     public async Task<object> ImportAsync(Stream fileStream, CancellationToken cancellationToken)
     {
+        var dataSourceId = Guid.CreateVersion7();
+
         await _unitOfWork.BeginTransactionAsync();
 
         var count = 0;
@@ -29,6 +31,7 @@ public class CnabImporterService(
                 //_logger.LogInformation(System.Text.Json.JsonSerializer.Serialize(transaction));
                 
                 transaction.Store = await _storeRepository.GetOrCreateAsync(transaction.Store);
+                transaction.DataSourceId = dataSourceId;
                 await _transactionRepository.AddAsync(transaction);
 
                 count++;
