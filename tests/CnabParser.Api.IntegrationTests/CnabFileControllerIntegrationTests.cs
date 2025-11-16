@@ -33,7 +33,7 @@ public class CnabFileControllerIntegrationTests : IClassFixture<CnabFileControll
         var importResult = await uploadResponse.Content.ReadFromJsonAsync<ImportResponse>();
         importResult.ShouldNotBeNull();
         importResult.ImportId.ShouldNotBeNullOrEmpty();
-        importResult.TransactionCount.ShouldBe(3);
+        importResult.TransactionCount.ShouldBe(4);
 
         // Act - Retrieve the data
         var getResponse = await _fixture.HttpClient.GetAsync($"/cnab-files/{importResult.ImportId}");
