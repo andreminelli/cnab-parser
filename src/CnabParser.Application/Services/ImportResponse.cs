@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace CnabParser.Application.Services
 {
     public class ImportResponse
@@ -12,8 +14,10 @@ namespace CnabParser.Application.Services
             TransactionCount = transactionCount;
         }
 
+        [Description("Identifier to query data saved")]
         public string ImportId { get; set; } = string.Empty;
 
+        [Description("Number of transactions read successfully and saved")]
         public int TransactionCount { get; set; }
     }
 }

@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using CnabParser.Application.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace CnabParser.Api.Controllers;
 
@@ -14,12 +15,10 @@ public class CnabFileController : ControllerBase
         _cnabImporterService = cnabImporterService;
     }
 
-    /// <summary>
-    /// Upload a CNAB file
-    /// </summary>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [EndpointDescription("Upload a CNAB file")]
     public async Task<ActionResult<ImportResponse>> UploadCnabFileAsync(
         IFormFile file,
         CancellationToken cancellationToken)
@@ -34,14 +33,12 @@ public class CnabFileController : ControllerBase
         return Ok(result);
     }
 
-    /// <summary>
-    /// Get stores and transactions from a previously imported file
-    /// </summary>
     [HttpGet("{importId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [EndpointDescription("Get stores and transactions from a previously imported file")]
     public async Task<ActionResult<ImportDataResponse>> GetCnabFileDataAsync(
-        string importId,
+        [Description("Value from property \"importId\", returned from a success upload")] string importId,
         CancellationToken cancellationToken)
     {
         if (!Guid.TryParse(importId, out var dataSourceId))

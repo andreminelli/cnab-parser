@@ -4,6 +4,7 @@ using CnabParser.Core.Repositories;
 using CnabParser.Infrastructure;
 using CnabParser.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,12 +43,16 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 // Create database on startup
-using (var scope = app.Services.CreateScope())
+if (!connectionString.IsNullOrEmpty())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<CnabDbContext>();
-    await dbContext.Database.EnsureCreatedAsync();
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<CnabDbContext>();
+        await dbContext.Database.EnsureCreatedAsync();
+    }
 }
 
 app.Run();
 
 public partial class Program { }
+

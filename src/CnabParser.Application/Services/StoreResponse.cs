@@ -1,4 +1,5 @@
 using CnabParser.Core.Entities;
+using System.ComponentModel;
 
 namespace CnabParser.Application.Services;
 
@@ -18,10 +19,13 @@ public class StoreResponse
             .ToArray();
     }
 
+    [Description("Store name")]
     public string Name { get; set; } = string.Empty;
 
+    [Description("Store owner name")]
     public string OwnerName { get; set; } = string.Empty;
 
+    [Description("Current balance from imported transactions")]
     public decimal Balance { get; set; }
 
     public TransactionResponse[] Transactions { get; set; } = [];
