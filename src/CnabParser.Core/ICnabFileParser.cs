@@ -1,6 +1,6 @@
 using CnabParser.Core.Entities;
 
-namespace CnabParser.Application.Helpers;
+namespace CnabParser.Core;
 
 public interface ICnabFileParser
 {

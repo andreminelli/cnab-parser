@@ -1,4 +1,3 @@
-using CnabParser.Application.Helpers;
 using CnabParser.Core.Entities;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -6,7 +5,7 @@ using Shouldly;
 using System.Text;
 using Xunit;
 
-namespace CnabParser.Application.Tests;
+namespace CnabParser.Infrastructure.Tests;
 
 public class CnabParserTests
 {
