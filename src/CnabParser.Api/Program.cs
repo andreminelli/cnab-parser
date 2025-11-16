@@ -47,11 +47,7 @@ app
         return TypedResults.Ok(result);
     })
     .DisableAntiforgery()
-    .WithOpenApi(operation => new(operation)
-    {
-        Summary = "CNAB Files",
-        Description = "Upload a CNAB file"
-    });
+    .WithDescription("Upload a CNAB file");
 
 // Create database on startup
 using (var scope = app.Services.CreateScope())
