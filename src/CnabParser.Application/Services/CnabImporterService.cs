@@ -1,7 +1,8 @@
+using CnabParser.Application.Helpers;
 using CnabParser.Core.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace CnabParser.Application;
+namespace CnabParser.Application.Services;
 
 public class CnabImporterService(
     ICnabFileParser cnabParser,

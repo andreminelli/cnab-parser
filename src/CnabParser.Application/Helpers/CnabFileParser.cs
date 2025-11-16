@@ -1,7 +1,7 @@
 using CnabParser.Core.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace CnabParser.Application;
+namespace CnabParser.Application.Helpers;
 
 public class CnabFileParser(ILogger<CnabFileParser> logger) : ICnabFileParser
 {

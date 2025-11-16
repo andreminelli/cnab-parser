@@ -1,4 +1,5 @@
-using CnabParser.Application;
+using CnabParser.Application.Helpers;
+using CnabParser.Application.Services;
 using CnabParser.Core.Repositories;
 using CnabParser.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,15 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 
+builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseExceptionHandler(exceptionHandlerApp
+    => exceptionHandlerApp.Run(async context
+        => await Results.Problem().ExecuteAsync(context)));
 
 if (app.Environment.IsDevelopment())
 {

@@ -1,4 +1,4 @@
-namespace CnabParser.Application;
+namespace CnabParser.Application.Services;
 
 public interface ICnabImporterService
 {

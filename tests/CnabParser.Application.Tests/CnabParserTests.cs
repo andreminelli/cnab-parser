@@ -1,3 +1,4 @@
+using CnabParser.Application.Helpers;
 using CnabParser.Core.Entities;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
