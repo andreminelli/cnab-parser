@@ -484,4 +484,4 @@ $RECYCLE.BIN/
 *.swp
 
 # OpenApi generated
-openapi/*.json
+/src/CnabParser.Api/openapi/CnabParser.Api.json

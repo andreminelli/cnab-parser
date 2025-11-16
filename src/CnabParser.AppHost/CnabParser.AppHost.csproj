@@ -18,6 +18,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\CnabParser.Api\CnabParser.Api.csproj" />
+		<ProjectReference Include="..\CnabParser.Web\CnabParser.Web.csproj" />
 	</ItemGroup>
 
 </Project>

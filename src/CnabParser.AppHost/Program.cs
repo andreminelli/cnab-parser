@@ -6,9 +6,16 @@ var sqlServer = builder
 var database = sqlServer
     .AddDatabase("cnabdb");
 
-builder
+var api = builder
     .AddProject<Projects.CnabParser_Api>("api")
+    .WithExternalHttpEndpoints()
     .WithReference(database)
     .WaitFor(database);
+
+builder.AddProject<Projects.CnabParser_Web>("webfrontend")
+    .WithExternalHttpEndpoints()
+    .WithReference(api)
+    .WaitFor(api);
+
 
 builder.Build().Run();
