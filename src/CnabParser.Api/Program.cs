@@ -21,9 +21,9 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 
+builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -33,21 +33,12 @@ app.UseExceptionHandler(exceptionHandlerApp
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapSwagger("/openapi/{documentName}.json");
+    app.MapOpenApi();
     app.MapScalarApiReference("/docs");
 }
 
 app.UseHttpsRedirection();
-
-app
-    .MapPost("/cnab-files", async (IFormFile file, ICnabImporterService cnabImporterService, CancellationToken cancellationToken) =>
-    {
-        await using var fileStream = file.OpenReadStream();
-        var result = await cnabImporterService.ImportAsync(fileStream, cancellationToken);
-        return TypedResults.Ok(result);
-    })
-    .DisableAntiforgery()
-    .WithDescription("Upload a CNAB file");
+app.MapControllers();
 
 // Create database on startup
 using (var scope = app.Services.CreateScope())

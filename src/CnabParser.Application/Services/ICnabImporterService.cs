@@ -2,5 +2,6 @@ namespace CnabParser.Application.Services;
 
 public interface ICnabImporterService
 {
-    Task<object> ImportAsync(Stream fileStream, CancellationToken cancellationToken);
+    Task<ImportDataResponse> GetImportDataAsync(Guid dataSourceId, CancellationToken cancellationToken);
+    Task<ImportResponse> ImportAsync(Stream fileStream, CancellationToken cancellationToken);
 }

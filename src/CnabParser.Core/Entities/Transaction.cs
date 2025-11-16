@@ -9,13 +9,24 @@ public class Transaction
     public Guid? DataSourceId { get; set; }
 
     public DateTimeOffset Date { get; set; }
+
     public TransactionType Type { get; set; }
+
     public decimal Amount { get; set; }
+
     public string Cpf { get; set; } = string.Empty;
+
     public string Card { get; set; } = string.Empty;
 
-    internal decimal GetSignedAmount()
+
+    public decimal GetSignedAmount()
     {
-        throw new NotImplementedException();
+        short sign = Type switch
+        {
+            TransactionType.Boleto or TransactionType.Financing or TransactionType.Rent => -1,
+            _ => 1
+        };
+
+        return Amount * sign;
     }
 }

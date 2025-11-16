@@ -1,4 +1,5 @@
 using CnabParser.Application.Helpers;
+using CnabParser.Core.Entities;
 using CnabParser.Core.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -17,7 +18,19 @@ public class CnabImporterService(
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly ILogger<CnabImporterService> _logger = logger;
 
-    public async Task<object> ImportAsync(Stream fileStream, CancellationToken cancellationToken)
+    public async Task<ImportDataResponse> GetImportDataAsync(Guid importId, CancellationToken cancellationToken)
+    {
+        var transactions = _transactionRepository.GetByDataSourceIdAsync(importId, cancellationToken);
+
+        var result = await transactions
+            .GroupBy(t => t.Store)
+            .Select(g => new StoreResponse(g.Key, g))
+            .ToListAsync();
+
+        return new ImportDataResponse(result);
+    }
+
+    public async Task<ImportResponse> ImportAsync(Stream fileStream, CancellationToken cancellationToken)
     {
         var dataSourceId = Guid.CreateVersion7();
 
@@ -28,8 +41,8 @@ public class CnabImporterService(
         {
             await foreach (var transaction in _cnabParser.ParseAsync(fileStream))
             {
-                //_logger.LogInformation(System.Text.Json.JsonSerializer.Serialize(transaction));
-                
+                cancellationToken.ThrowIfCancellationRequested();
+
                 transaction.Store = await _storeRepository.GetOrCreateAsync(transaction.Store);
                 transaction.DataSourceId = dataSourceId;
                 await _transactionRepository.AddAsync(transaction);
@@ -39,12 +52,13 @@ public class CnabImporterService(
 
             await _unitOfWork.CommitAsync();
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError(ex, "Failed importing file");
             await _unitOfWork.RollbackAsync();
             throw;
         }
 
-        return count;
+        return new ImportResponse(dataSourceId.ToString(), count);
     }
 }
