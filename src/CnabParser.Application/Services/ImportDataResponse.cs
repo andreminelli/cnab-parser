@@ -1,6 +1,15 @@
 namespace CnabParser.Application.Services;
 
-public class ImportDataResponse(IReadOnlyList<StoreResponse> data)
+public class ImportDataResponse
 {
-    public IReadOnlyList<StoreResponse> Data { get; } = data;
+    public ImportDataResponse()
+    {
+    }
+
+    public ImportDataResponse(IReadOnlyList<StoreResponse> data)
+    {
+        Data = data;
+    }
+
+    public IReadOnlyList<StoreResponse> Data { get; set; } = [];
 }

@@ -4,6 +4,10 @@ namespace CnabParser.Application.Services;
 
 public class StoreResponse
 {
+    public StoreResponse()
+    {
+    }
+
     public StoreResponse(Store store, IEnumerable<Transaction> transactions)
     {
         Name = store.Name;
@@ -14,11 +18,11 @@ public class StoreResponse
             .ToArray();
     }
 
-    public string Name { get; }
+    public string Name { get; set; } = string.Empty;
 
-    public string OwnerName { get; }
+    public string OwnerName { get; set; } = string.Empty;
 
-    public decimal Balance { get; }
+    public decimal Balance { get; set; }
 
-    public TransactionResponse[] Transactions { get; }
+    public TransactionResponse[] Transactions { get; set; } = [];
 }
