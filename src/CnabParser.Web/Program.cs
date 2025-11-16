@@ -5,7 +5,7 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-var apiUrl = builder.Configuration["API_HTTPS"]!;
+var apiUrl = builder.Configuration["API_HTTP"]!;
 builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(apiUrl));
 
 var app = builder.Build();
