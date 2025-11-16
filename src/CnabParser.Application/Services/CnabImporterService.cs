@@ -1,5 +1,4 @@
 using CnabParser.Application.Helpers;
-using CnabParser.Core.Entities;
 using CnabParser.Core.Repositories;
 using Microsoft.Extensions.Logging;
 
